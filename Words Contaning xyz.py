@@ -5,7 +5,7 @@
 #contains xyz in specific places  _X__YZ
 dictionary = open("words_alpha.txt")
 
-def Mode1(): #contains exact string xyz
+def Mode1(): #finds words that contain exact string xyz
     target = input("Specify the exact letters you are looking for: ")
     length = int(input("Specify the length for any word answers: "))
     found = False
@@ -15,9 +15,11 @@ def Mode1(): #contains exact string xyz
             if target in word:
                 print(word)
                 found = True
-    if found == False:
+                
+    if found == False: 
         print("Nothing found :(")
-def Mode2():
+        
+def Mode2(): #finds words using letters xyz in any order (tca should give act and cat)
     target = input("Specify the exact letters you are looking for: ")
     length = int(input("Specify the maximum length for any word answers: "))
     found = False
@@ -34,8 +36,10 @@ def Mode2():
             if allLetterCheck == True:
                 print(word)
                 found = True
+                
     if found == False:
         print("Nothing found :(")
+        
 def Mode3():
     targetA = input("Specify the exact letters you are looking for before the space: ")
     targetB = input("Specify the exact letters you are looking for after the space: ")
@@ -49,6 +53,7 @@ def Mode3():
                 if targetB in word[(word.find(targetA)+len(targetA)+numSpaces):(word.find(targetA)+len(targetA)+numSpaces+len(targetB))]:
                     print(word)
                     found = True
+                    
     if found == False:
         print("Nothing found :(")
     
