@@ -61,32 +61,41 @@ def Mode3(): #finds words using x_yz when there are gaps in the word (typing i e
         
 def Mode4(): #Finds words that only contain letters from provided list
     length = int(input("Specify the length for any word answers: "))
-    letterList = input("Specify which letters the word can use")
+    letterList = input("Specify which letters the word can use: ")
     letterListState = []
-    for letter in LetterList:
+    found = False
+    progress = False
+    for letter in letterList:
         letterListState.append(False)
     for word in dictionary:
         word = word.strip()
         if len(word)==length :
-            for letter in word:
-                if letter not in letterList:
+            for i in range(0,len(word)): #for every letter in our word...
+                for j in range(0,len(letterList)) :#for each letter in our input...
+                    if (word[i] == letterList[j]) and not letterListState[j]: #To prevent letters being used twice in target word
+                        letterListState[j] = True                             #when double letters aren't provided by the user
+                        found = True  
+                if found == True:
                     found = False
-                    break
+                    progress = True
                 else:
-                    found = True
+                    progress = False
+                    break
                     
-            if found == True:
+            if progress == True:
                 print(word)
                 found = False
-                
-                    
-                
+                progress = False
+        letterListState = []
+        for letter in letterList:
+            letterListState.append(False)            
+                              
     
 print("REMEMBER TO TYPE PROPER PARAMETERS, THERE ARE ABOUT 400k WORDS THAT COULD BE OUTPUT")
 print("Mode 1: Find words containing an exact match to your input (typing act will bring words like actual or fact)")
-print("Mode 2: Find words containg all the letters you input in any order typing ")
+print("Mode 2: Find words containg all the letters you input in any order typing")
 print("Mode 3: Finds words containing an exact match with gaps in your input (typing i e will find words like bile or time)")
-print("Mode 4: Finds words that only contain letters from provided list \n")
+print("Mode 4: Finds words that only contain letters from provided list\n")
 modeChoice = int(input("Please select which mode you wish to use: "))
 if modeChoice == 1:
     Mode1()
