@@ -96,7 +96,9 @@ print("Mode 1: Find words containing an exact match to your input (typing act wi
 print("Mode 2: Find words containg all the letters you input in any order typing")
 print("Mode 3: Finds words containing an exact match with gaps in your input (typing i e will find words like bile or time)")
 print("Mode 4: Finds words that only contain letters from provided list\n")
+
 modeChoice = int(input("Please select which mode you wish to use: "))
+
 if modeChoice == 1:
     Mode1()
 elif modeChoice == 2:
