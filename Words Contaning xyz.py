@@ -1,10 +1,12 @@
 #words containg xyz
-#Modes:1,2,3
-#contains exact string xyz
-#contains xyz in any order
-#contains xyz in specific places  _X__YZ
+#Modes:1,2,3,4,5
+#1. contains exact string xyz
+#2. contains xyz in any order
+#3. contains xyz in specific places  X__YZ
+#4. contains only any of abcdef in smaller words
+#5. contains xyz in specific places X_Y_Z
 dictionary = open("words_alpha.txt")
-
+modeChoice = 0
 def Mode1(): #finds words that contain exact string xyz (typing act will bring words like actual or fact)
     target = input("Specify the exact letters you are looking for: ")
     length = int(input("Specify the length for any word answers: "))
@@ -90,22 +92,47 @@ def Mode4(): #Finds words that only contain letters from provided list
         for letter in letterList:
             letterListState.append(False)            
                               
-    
+def Mode5(): #finds words using x_y_z when there are gaps in the word (typing a i n will find words like alien or avian)
+    targetA = input("Specify the exact letters you are looking for before the space: ")
+    targetB = input("Specify the exact letters you are looking for after the 1st space: ")
+    targetC = input("Specify the exact letters you are looking for after the 2nd space: ")
+    numSpacesAB = int(input("Specify the number of spaces in the first gap: "))
+    numSpacesBC = int(input("Specify the number of spaces in the second gap: "))
+    length = int(input("Specify the length for any word answers: "))
+    found = False
+    for word in dictionary:
+        word = word.strip()
+        if len(word)==length :
+            if targetA in word:
+                if targetB in word[(word.find(targetA)+len(targetA)+numSpacesAB):(word.find(targetA)+len(targetA)+numSpacesAB+len(targetB))]:
+                    if targetC in word[(word.find(targetB)+len(targetB)+numSpacesBC):(word.find(targetB)+len(targetB)+numSpacesBC+len(targetC))]:
+                        #^this long line of code is limit the search so that extra words that dont fit the criteria appear
+                        #I'm doing this by only checking if the second part of the word 
+                        print(word)
+                        found = True
+    if found == False:
+        print("Nothing found :(")
+        
 print("REMEMBER TO TYPE PROPER PARAMETERS, THERE ARE ABOUT 400k WORDS THAT COULD BE OUTPUT")
 print("Mode 1: Find words containing an exact match to your input (typing act will bring words like actual or fact)")
 print("Mode 2: Find words containg all the letters you input in any order typing")
 print("Mode 3: Finds words containing an exact match with gaps in your input (typing i e will find words like bile or time)")
-print("Mode 4: Finds words that only contain letters from provided list\n")
+print("Mode 4: Finds words that only contain letters from provided list")
+print("Mode 5: Finds words using x_y_z when there are 2 gaps in the word (typing a i n will find words like alien or avian)\n")
+while 0 >= modeChoice or modeChoice >= 6 :
+    modeChoice = int(input("Please select which mode you wish to use: "))
 
-modeChoice = int(input("Please select which mode you wish to use: "))
+    if modeChoice == 1:
+        Mode1()
+    elif modeChoice == 2:
+        Mode2()
+    elif modeChoice == 3:
+        Mode3()
+    elif modeChoice == 4:
+        Mode4()
+    elif modeChoice == 5:
+        Mode5()
+    else:
+        print("Input error. Ensure you are typing only 1,2,3,4 or 5")
 
-if modeChoice == 1:
-    Mode1()
-elif modeChoice == 2:
-    Mode2()
-elif modeChoice == 3:
-    Mode3()
-elif modeChoice == 4:
-    Mode4()
-else:
-    print("Input error. Ensure you are typing only 1,2,3 or 4")
+input("Program ends here")
